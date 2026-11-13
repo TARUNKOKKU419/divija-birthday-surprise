@@ -30,7 +30,7 @@ body::before {
   z-index: 1;
 }
 
-/* TAP TO BEGIN */
+/* TAP TO BEGIN SCREEN */
 
 #startScreen {
   position: fixed;
@@ -62,23 +62,26 @@ body::before {
   text-shadow: 0 0 15px rgba(232,199,131,.4);
 }
 
-/* JUST FOR YOU - BIG TEXT */
-
-.start-heading {
-  color: #f4a9c5;
-  font-size: clamp(42px, 8vw, 70px);
-  letter-spacing: 2px;
-  font-family: 'Italianno', cursive;
-  text-shadow: 0 0 12px rgba(232,121,176,.3);
-}
+/* A LITTLE SURPRISE - TOP */
 
 .start-content h2 {
   font-family: 'Cormorant Garamond', serif;
-  font-size: 20px;
+  font-size: 22px;
   font-weight: 400;
   color: #e8c783;
-  margin: 15px 0 25px;
+  margin: 10px 0;
   letter-spacing: 2px;
+}
+
+/* JUST FOR YOU - BELOW */
+
+.start-heading {
+  color: #f4a9c5;
+  font-family: 'Italianno', cursive;
+  font-size: clamp(42px, 8vw, 70px);
+  letter-spacing: 2px;
+  margin-bottom: 25px;
+  text-shadow: 0 0 12px rgba(232,121,176,.3);
 }
 
 #startBtn {
@@ -195,7 +198,7 @@ body.started h1 {
   animation: fadeUp 2s ease 3.8s both;
 }
 
-/* DIVIJA HANDWRITING FONT */
+/* DIVIJA HANDWRITING NAME */
 
 .name {
   font-family: 'Italianno', cursive;
@@ -466,8 +469,12 @@ body.started #surpriseBtn {
     margin-top: 45px;
   }
 
+  .start-content h2 {
+    font-size: 20px;
+  }
+
   .start-heading {
-    font-size: clamp(42px, 10vw, 60px);
+    font-size: 52px;
     letter-spacing: 1px;
   }
 

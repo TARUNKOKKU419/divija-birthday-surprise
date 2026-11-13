@@ -46,13 +46,13 @@ function openSurprise() {
   surpriseBtn.disabled = true;
   surpriseBtn.textContent = "YOUR SURPRISE IS HERE ✨";
 
-  /* SHOW BIRTHDAY MESSAGE */
+  /* BIRTHDAY MESSAGE */
 
   message.style.display = "block";
 
   setTimeout(() => {
 
-    /* SHOW ADMIRATION */
+    /* ADMIRATION */
 
     admiration.style.display = "block";
 
