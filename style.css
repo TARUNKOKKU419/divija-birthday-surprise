@@ -467,3 +467,19 @@ body.started #surpriseBtn {
     font-size: 20px;
   }
 }
+/* BIG JUST FOR YOU */
+
+.start-heading {
+  font-size: clamp(42px, 8vw, 70px);
+  letter-spacing: 2px;
+}
+
+/* DIVIJA UNDER ADMIRATION */
+
+.compliment span {
+  display: block;
+  margin-top: 12px;
+  font-size: 1em;
+  color: #f4a9c5;
+  font-family: 'Italianno', cursive;
+}
