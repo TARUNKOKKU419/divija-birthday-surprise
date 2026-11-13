@@ -1,52 +1,56 @@
 
 const bgMusic = document.getElementById("bgMusic");
+const startBtn = document.getElementById("startBtn");
+const startScreen = document.getElementById("startScreen");
 const surpriseBtn = document.getElementById("surpriseBtn");
 
 let fadeTimer = null;
 let surpriseOpened = false;
 
-// BACKGROUND MUSIC
+// START EXPERIENCE AND MUSIC
+startBtn.addEventListener("click", async () => {
+
+  // Start music directly from user's tap
+  bgMusic.volume = 0;
+
+  try {
+    await bgMusic.play();
+
+    let volume = 0;
+
+    clearInterval(fadeTimer);
+
+    fadeTimer = setInterval(() => {
+      volume = Math.min(volume + 0.05, 0.7);
+      bgMusic.volume = volume;
+
+      if (volume >= 0.7) {
+        clearInterval(fadeTimer);
+      }
+    }, 150);
+
+  } catch (error) {
+    console.log("Music playback error:", error);
+  }
+
+  // Start birthday animation
+  document.body.classList.add("started");
+  startScreen.classList.add("hide");
+
+  setTimeout(() => {
+    startScreen.remove();
+  }, 1000);
+
+});
+
+// MUSIC FALLBACK
 function startMusic() {
-  if (!bgMusic) return;
+  if (!bgMusic || !bgMusic.paused) return;
 
-  if (!bgMusic.paused) return;
-
-  bgMusic.play()
-    .then(() => {
-      clearInterval(fadeTimer);
-
-      let volume = 0;
-
-      bgMusic.volume = 0;
-
-      fadeTimer = setInterval(() => {
-        volume = Math.min(volume + 0.05, 0.7);
-        bgMusic.volume = volume;
-
-        if (volume >= 0.7) {
-          clearInterval(fadeTimer);
-        }
-      }, 150);
-    })
-    .catch(error => {
-      console.log("Music playback error:", error);
-    });
+  bgMusic.play().catch(error => {
+    console.log("Music playback error:", error);
+  });
 }
-
-// TRY MUSIC AUTOPLAY
-window.addEventListener("load", () => {
-  startMusic();
-});
-
-// MOBILE FIRST TOUCH
-document.addEventListener("touchstart", startMusic, {
-  once: true
-});
-
-// DESKTOP FIRST CLICK
-document.addEventListener("click", startMusic, {
-  once: true
-});
 
 // BIRTHDAY SURPRISE
 function openSurprise() {
@@ -54,13 +58,10 @@ function openSurprise() {
 
   surpriseOpened = true;
 
-  // Start music on surprise button click
   startMusic();
 
   const message = document.getElementById("message");
   const admiration = document.getElementById("admiration");
-
-  if (!message || !admiration) return;
 
   surpriseBtn.textContent = "YOUR SURPRISE IS HERE ✨";
   surpriseBtn.disabled = true;
@@ -79,12 +80,11 @@ function openSurprise() {
       behavior: "smooth",
       block: "center"
     });
+
   }, 2500);
 }
 
-if (surpriseBtn) {
-  surpriseBtn.addEventListener("click", openSurprise);
-}
+surpriseBtn.addEventListener("click", openSurprise);
 
 // FLOATING GOLDEN SPARKLES
 for (let i = 0; i < 22; i++) {
