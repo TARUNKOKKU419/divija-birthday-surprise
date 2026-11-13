@@ -1,80 +1,62 @@
 
 const bgMusic = document.getElementById("bgMusic");
-const musicToggle = document.getElementById("musicToggle");
-const musicStatus = document.getElementById("musicStatus");
 const surpriseBtn = document.getElementById("surpriseBtn");
 
 let fadeTimer = null;
 let surpriseOpened = false;
 
-bgMusic.volume = 0;
-
 // BACKGROUND MUSIC
-async function startMusic() {
-  if (!bgMusic.paused) return true;
+if (bgMusic) {
+  bgMusic.volume = 0;
 
-  try {
-    await bgMusic.play();
+  async function startMusic() {
+    if (!bgMusic.paused) return true;
 
-    musicToggle.textContent = "♫ MUSIC ON";
-    musicStatus.textContent = "♪ Premalu - Insecurities BGM";
+    try {
+      await bgMusic.play();
 
-    clearInterval(fadeTimer);
+      clearInterval(fadeTimer);
 
-    bgMusic.volume = 0;
-    let volume = 0;
+      let volume = bgMusic.volume;
 
-    fadeTimer = setInterval(() => {
-      volume = Math.min(volume + 0.05, 0.7);
-      bgMusic.volume = volume;
+      fadeTimer = setInterval(() => {
+        volume = Math.min(volume + 0.05, 0.7);
+        bgMusic.volume = volume;
 
-      if (volume >= 0.7) {
-        clearInterval(fadeTimer);
-      }
-    }, 150);
+        if (volume >= 0.7) {
+          clearInterval(fadeTimer);
+        }
+      }, 150);
 
-    return true;
-  } catch (error) {
-    musicStatus.textContent = "Tap anywhere to play ♡";
-    musicToggle.textContent = "♫ PLAY MUSIC";
-    return false;
+      return true;
+
+    } catch (error) {
+      console.log("Browser requires user interaction for music.");
+      return false;
+    }
   }
+
+  // AUTOMATIC MUSIC ON WEBSITE OPEN
+  window.addEventListener("load", () => {
+    startMusic();
+  });
+
+  // FIRST INTERACTION MUSIC FALLBACK
+  document.addEventListener("pointerdown", () => {
+    if (bgMusic.paused) {
+      startMusic();
+    }
+  }, { once: true });
 }
 
-// TRY MUSIC WHEN WEBSITE LOADS
-window.addEventListener("load", () => {
-  startMusic();
-});
-
-// START MUSIC ON FIRST SCREEN TAP/CLICK
-document.addEventListener("pointerdown", (event) => {
-  if (event.target.closest("#musicToggle")) return;
-
-  if (bgMusic.paused) {
-    startMusic();
-  }
-}, { once: true });
-
-// MUSIC ON/OFF BUTTON
-musicToggle.addEventListener("click", async () => {
-  if (bgMusic.paused) {
-    await startMusic();
-  } else {
-    bgMusic.pause();
-    clearInterval(fadeTimer);
-
-    musicToggle.textContent = "♫ MUSIC OFF";
-    musicStatus.textContent = "Music paused";
-  }
-});
-
-// BIRTHDAY SURPRISE BUTTON
+// BIRTHDAY SURPRISE
 function openSurprise() {
   if (surpriseOpened) return;
 
   surpriseOpened = true;
 
-  if (bgMusic.paused) {
+  // Start music if browser blocked autoplay
+  if (bgMusic && bgMusic.paused) {
     startMusic();
   }
 
@@ -85,6 +67,7 @@ function openSurprise() {
   surpriseBtn.disabled = true;
 
   message.style.display = "block";
+
   message.scrollIntoView({
     behavior: "smooth",
     block: "center"
@@ -97,6 +80,7 @@ function openSurprise() {
       behavior: "smooth",
       block: "center"
     });
+
   }, 2500);
 }
 
@@ -111,6 +95,7 @@ for (let i = 0; i < 22; i++) {
 
   sparkle.style.left = Math.random() * 100 + "%";
   sparkle.style.animationDelay = Math.random() * 8 + "s";
+
   sparkle.style.animationDuration =
     (6 + Math.random() * 6) + "s";
 

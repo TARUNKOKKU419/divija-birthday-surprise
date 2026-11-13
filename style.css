@@ -1,3 +1,4 @@
+
 * {
   margin: 0;
   padding: 0;
@@ -105,7 +106,7 @@ h1 {
   animation: fadeUp 2s ease 6.5s both;
 }
 
-/* BUTTONS */
+/* SURPRISE BUTTON */
 #surpriseBtn {
   background: linear-gradient(45deg, #bd8b42, #f7d99b);
   border: none;
@@ -128,37 +129,6 @@ h1 {
 #surpriseBtn:disabled {
   cursor: default;
   opacity: .6;
-}
-
-#musicToggle {
-  position: fixed;
-  top: 18px;
-  right: 18px;
-  z-index: 200;
-  padding: 11px 18px;
-  border: 1px solid rgba(244,169,197,.6);
-  border-radius: 30px;
-  background: rgba(35,15,29,.92);
-  color: #f7d99b;
-  font: 600 14px 'Cormorant Garamond', serif;
-  cursor: pointer;
-  letter-spacing: 1px;
-  box-shadow: 0 0 18px rgba(232,121,176,.2);
-}
-
-#musicToggle:hover {
-  transform: scale(1.05);
-  box-shadow: 0 0 22px rgba(232,121,176,.35);
-}
-
-#musicStatus {
-  position: fixed;
-  top: 62px;
-  right: 20px;
-  z-index: 200;
-  font-size: 12px;
-  color: #eadde2;
-  pointer-events: none;
 }
 
 /* BIRTHDAY MESSAGE */
@@ -223,7 +193,11 @@ h1 {
     transform: translateY(105vh) rotate(0deg);
     opacity: 0;
   }
-  20%, 80% { opacity: 1; }
+
+  20%, 80% {
+    opacity: 1;
+  }
+
   100% {
     transform: translateY(-10vh) rotate(180deg);
     opacity: 0;
@@ -232,25 +206,33 @@ h1 {
 
 /* GENERAL FADE */
 @keyframes fadeUp {
-  from { opacity: 0; transform: translateY(30px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 /* MOBILE */
 @media (max-width: 600px) {
-  .container { padding: 35px 15px; }
+  .container {
+    padding: 35px 15px;
+  }
+
   .intro-text {
     font-size: 12px;
     letter-spacing: 4px;
   }
-  .wish { font-size: 18px; }
-  #admiration { margin-top: 45px; }
-  #musicToggle {
-    top: 12px;
-    right: 12px;
+
+  .wish {
+    font-size: 18px;
   }
-  #musicStatus {
-    top: 54px;
-    right: 14px;
+
+  #admiration {
+    margin-top: 45px;
   }
 }
