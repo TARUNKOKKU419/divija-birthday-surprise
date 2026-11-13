@@ -6,18 +6,18 @@ let fadeTimer = null;
 let surpriseOpened = false;
 
 // BACKGROUND MUSIC
-if (bgMusic) {
-  bgMusic.volume = 0;
+function startMusic() {
+  if (!bgMusic) return;
 
-  async function startMusic() {
-    if (!bgMusic.paused) return;
+  if (!bgMusic.paused) return;
 
-    try {
-      await bgMusic.play();
-
+  bgMusic.play()
+    .then(() => {
       clearInterval(fadeTimer);
 
       let volume = 0;
+
+      bgMusic.volume = 0;
 
       fadeTimer = setInterval(() => {
         volume = Math.min(volume + 0.05, 0.7);
@@ -27,20 +27,26 @@ if (bgMusic) {
           clearInterval(fadeTimer);
         }
       }, 150);
-
-    } catch (error) {
-      console.log("Browser blocked autoplay.");
-    }
-  }
-
-  // TRY AUTOPLAY WHEN WEBSITE OPENS
-  window.addEventListener("load", startMusic);
-
-  // FALLBACK: FIRST USER INTERACTION
-  document.addEventListener("pointerdown", startMusic, {
-    once: true
-  });
+    })
+    .catch(error => {
+      console.log("Music playback error:", error);
+    });
 }
+
+// TRY MUSIC AUTOPLAY
+window.addEventListener("load", () => {
+  startMusic();
+});
+
+// MOBILE FIRST TOUCH
+document.addEventListener("touchstart", startMusic, {
+  once: true
+});
+
+// DESKTOP FIRST CLICK
+document.addEventListener("click", startMusic, {
+  once: true
+});
 
 // BIRTHDAY SURPRISE
 function openSurprise() {
@@ -48,12 +54,13 @@ function openSurprise() {
 
   surpriseOpened = true;
 
-  if (bgMusic && bgMusic.paused) {
-    startMusic();
-  }
+  // Start music on surprise button click
+  startMusic();
 
   const message = document.getElementById("message");
   const admiration = document.getElementById("admiration");
+
+  if (!message || !admiration) return;
 
   surpriseBtn.textContent = "YOUR SURPRISE IS HERE ✨";
   surpriseBtn.disabled = true;
@@ -75,7 +82,9 @@ function openSurprise() {
   }, 2500);
 }
 
-surpriseBtn.addEventListener("click", openSurprise);
+if (surpriseBtn) {
+  surpriseBtn.addEventListener("click", openSurprise);
+}
 
 // FLOATING GOLDEN SPARKLES
 for (let i = 0; i < 22; i++) {
