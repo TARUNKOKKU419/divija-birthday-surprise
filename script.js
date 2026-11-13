@@ -38,17 +38,14 @@ function startMusic() {
 
 if (startBtn && startScreen) {
   startBtn.addEventListener("click", () => {
-
     startMusic();
 
     document.body.classList.add("started");
-
     startScreen.classList.add("hide");
 
     setTimeout(() => {
       startScreen.style.display = "none";
     }, 1000);
-
   });
 }
 
@@ -57,12 +54,13 @@ if (startBtn && startScreen) {
 function openSurprise() {
   if (surpriseOpened) return;
 
-  surpriseOpened = true;
-
   const message = document.getElementById("message");
   const admiration = document.getElementById("admiration");
+  const finalReveal = document.getElementById("finalReveal");
 
-  if (!message || !admiration || !surpriseBtn) return;
+  if (!message || !admiration || !finalReveal || !surpriseBtn) return;
+
+  surpriseOpened = true;
 
   surpriseBtn.textContent = "YOUR SURPRISE IS HERE ✨";
   surpriseBtn.disabled = true;
@@ -74,6 +72,8 @@ function openSurprise() {
     block: "center"
   });
 
+  /* ADMIRATION REVEAL */
+
   setTimeout(() => {
     admiration.style.display = "block";
 
@@ -81,6 +81,20 @@ function openSurprise() {
       behavior: "smooth",
       block: "center"
     });
+
+    /* GRAND FINAL REVEAL */
+
+    setTimeout(() => {
+      finalReveal.classList.add("show");
+
+      setTimeout(() => {
+        finalReveal.scrollIntoView({
+          behavior: "smooth",
+          block: "center"
+        });
+      }, 500);
+
+    }, 5000);
 
   }, 2500);
 }
@@ -92,7 +106,6 @@ if (surpriseBtn) {
 /* 45 FLOATING GOLDEN SPARKLES */
 
 for (let i = 0; i < 45; i++) {
-
   const sparkle = document.createElement("div");
 
   sparkle.className = "sparkle";
