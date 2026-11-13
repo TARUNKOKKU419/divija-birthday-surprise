@@ -1,6 +1,4 @@
 
-// DIVIJA BIRTHDAY WEBSITE - BACKGROUND MUSIC
-
 const bgMusic = document.getElementById("bgMusic");
 const musicToggle = document.getElementById("musicToggle");
 const musicStatus = document.getElementById("musicStatus");
@@ -11,7 +9,7 @@ let surpriseOpened = false;
 
 bgMusic.volume = 0;
 
-// START MUSIC
+// BACKGROUND MUSIC
 async function startMusic() {
   if (!bgMusic.paused) return true;
 
@@ -22,8 +20,8 @@ async function startMusic() {
     musicStatus.textContent = "♪ Premalu - Insecurities BGM";
 
     clearInterval(fadeTimer);
-    bgMusic.volume = 0;
 
+    bgMusic.volume = 0;
     let volume = 0;
 
     fadeTimer = setInterval(() => {
@@ -37,18 +35,27 @@ async function startMusic() {
 
     return true;
   } catch (error) {
+    musicStatus.textContent = "Tap anywhere to play ♡";
     musicToggle.textContent = "♫ PLAY MUSIC";
-    musicStatus.textContent = "Tap MUSIC ON to play ♡";
     return false;
   }
 }
 
-// AUTOPLAY ATTEMPT
+// TRY MUSIC WHEN WEBSITE LOADS
 window.addEventListener("load", () => {
   startMusic();
 });
 
-// MUSIC BUTTON
+// START MUSIC ON FIRST SCREEN TAP/CLICK
+document.addEventListener("pointerdown", (event) => {
+  if (event.target.closest("#musicToggle")) return;
+
+  if (bgMusic.paused) {
+    startMusic();
+  }
+}, { once: true });
+
+// MUSIC ON/OFF BUTTON
 musicToggle.addEventListener("click", async () => {
   if (bgMusic.paused) {
     await startMusic();
@@ -61,13 +68,12 @@ musicToggle.addEventListener("click", async () => {
   }
 });
 
-// OPEN SURPRISE
+// BIRTHDAY SURPRISE BUTTON
 function openSurprise() {
   if (surpriseOpened) return;
 
   surpriseOpened = true;
 
-  // Start music if paused
   if (bgMusic.paused) {
     startMusic();
   }
@@ -75,18 +81,15 @@ function openSurprise() {
   const message = document.getElementById("message");
   const admiration = document.getElementById("admiration");
 
-  // Change button text
   surpriseBtn.textContent = "YOUR SURPRISE IS HERE ✨";
   surpriseBtn.disabled = true;
 
-  // Reveal birthday message
   message.style.display = "block";
   message.scrollIntoView({
     behavior: "smooth",
     block: "center"
   });
 
-  // Reveal next section after 2.5 seconds
   setTimeout(() => {
     admiration.style.display = "block";
 
@@ -97,7 +100,6 @@ function openSurprise() {
   }, 2500);
 }
 
-// IMPORTANT: CONNECT BUTTON TO FUNCTION
 surpriseBtn.addEventListener("click", openSurprise);
 
 // FLOATING GOLDEN SPARKLES
@@ -106,6 +108,7 @@ for (let i = 0; i < 22; i++) {
 
   sparkle.className = "sparkle";
   sparkle.textContent = "✦";
+
   sparkle.style.left = Math.random() * 100 + "%";
   sparkle.style.animationDelay = Math.random() * 8 + "s";
   sparkle.style.animationDuration =
