@@ -1,80 +1,59 @@
 
-const bgMusic = document.getElementById("bgMusic");
-const startBtn = document.getElementById("startBtn");
 const startScreen = document.getElementById("startScreen");
-const surpriseBtn = document.getElementById("surpriseBtn");
+const startBtn = document.getElementById("startBtn");
+const bgMusic = document.getElementById("bgMusic");
 
-let fadeTimer = null;
+const surpriseBtn = document.getElementById("surpriseBtn");
+const message = document.getElementById("message");
+const admiration = document.getElementById("admiration");
+const finalReveal = document.getElementById("finalReveal");
+
 let surpriseOpened = false;
 
-/* BACKGROUND MUSIC */
 
-function startMusic() {
-  if (!bgMusic || !bgMusic.paused) return;
+/* START WEBSITE AND MUSIC */
 
-  bgMusic.volume = 0;
+startBtn.addEventListener("click", async () => {
 
-  bgMusic.play()
-    .then(() => {
-      clearInterval(fadeTimer);
+  startScreen.classList.add("hide");
 
-      let volume = 0;
+  document.body.classList.add("started");
 
-      fadeTimer = setInterval(() => {
-        volume = Math.min(volume + 0.05, 0.7);
-        bgMusic.volume = volume;
+  bgMusic.volume = 0.7;
 
-        if (volume >= 0.7) {
-          clearInterval(fadeTimer);
-        }
-      }, 150);
-    })
-    .catch(error => {
-      console.log("Music playback error:", error);
-    });
-}
+  try {
+    await bgMusic.play();
+  } catch (error) {
+    console.log("Music playback could not start:", error);
+  }
 
-/* TAP TO BEGIN */
+});
 
-if (startBtn && startScreen) {
-  startBtn.addEventListener("click", () => {
-    startMusic();
 
-    document.body.classList.add("started");
-    startScreen.classList.add("hide");
-
-    setTimeout(() => {
-      startScreen.style.display = "none";
-    }, 1000);
-  });
-}
-
-/* BIRTHDAY SURPRISE */
+/* SURPRISE REVEAL */
 
 function openSurprise() {
+
   if (surpriseOpened) return;
 
-  const message = document.getElementById("message");
-  const admiration = document.getElementById("admiration");
-  const finalReveal = document.getElementById("finalReveal");
-
-  if (!message || !admiration || !finalReveal || !surpriseBtn) return;
+  if (!message || !admiration || !finalReveal) {
+    console.error("A required reveal section is missing.");
+    return;
+  }
 
   surpriseOpened = true;
 
-  surpriseBtn.textContent = "YOUR SURPRISE IS HERE ✨";
   surpriseBtn.disabled = true;
+  surpriseBtn.textContent = "YOUR SURPRISE IS HERE ✨";
+
+  /* SHOW BIRTHDAY MESSAGE */
 
   message.style.display = "block";
 
-  message.scrollIntoView({
-    behavior: "smooth",
-    block: "center"
-  });
-
-  /* ADMIRATION REVEAL */
-
   setTimeout(() => {
+
+    /* SHOW ADMIRATION */
+
     admiration.style.display = "block";
 
     admiration.scrollIntoView({
@@ -82,45 +61,54 @@ function openSurprise() {
       block: "center"
     });
 
+  }, 2500);
+
+
+  setTimeout(() => {
+
     /* GRAND FINAL REVEAL */
 
-    setTimeout(() => {
-      finalReveal.classList.add("show");
+    finalReveal.classList.add("show");
 
-      setTimeout(() => {
-        finalReveal.scrollIntoView({
-          behavior: "smooth",
-          block: "center"
-        });
-      }, 500);
+    finalReveal.scrollIntoView({
+      behavior: "smooth",
+      block: "center"
+    });
 
-    }, 5000);
+  }, 6500);
 
-  }, 2500);
 }
 
-if (surpriseBtn) {
-  surpriseBtn.addEventListener("click", openSurprise);
+surpriseBtn.addEventListener("click", openSurprise);
+
+
+/* FLOATING GOLDEN SPARKLES */
+
+function createSparkles() {
+
+  for (let i = 0; i < 45; i++) {
+
+    const sparkle = document.createElement("div");
+
+    sparkle.className = "sparkle";
+
+    sparkle.textContent = Math.random() > 0.5 ? "✦" : "✧";
+
+    sparkle.style.left = Math.random() * 100 + "vw";
+
+    sparkle.style.fontSize =
+      (Math.random() * 12 + 8) + "px";
+
+    sparkle.style.animationDuration =
+      (Math.random() * 6 + 6) + "s";
+
+    sparkle.style.animationDelay =
+      (Math.random() * 8) + "s";
+
+    document.body.appendChild(sparkle);
+
+  }
+
 }
 
-/* 45 FLOATING GOLDEN SPARKLES */
-
-for (let i = 0; i < 45; i++) {
-  const sparkle = document.createElement("div");
-
-  sparkle.className = "sparkle";
-  sparkle.textContent = Math.random() > 0.5 ? "✦" : "✧";
-
-  sparkle.style.left = Math.random() * 100 + "vw";
-
-  sparkle.style.fontSize =
-    (10 + Math.random() * 18) + "px";
-
-  sparkle.style.animationDelay =
-    (Math.random() * 8) + "s";
-
-  sparkle.style.animationDuration =
-    (7 + Math.random() * 7) + "s";
-
-  document.body.appendChild(sparkle);
-}
+createSparkles();
