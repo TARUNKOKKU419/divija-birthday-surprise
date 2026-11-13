@@ -17,11 +17,17 @@ body::before {
   content: "";
   position: fixed;
   inset: 0;
-  background: radial-gradient(circle at center, rgba(215,140,175,.09), transparent 65%);
+  background: radial-gradient(
+    circle at center,
+    rgba(215,140,175,.09),
+    transparent 65%
+  );
   pointer-events: none;
+  z-index: 1;
 }
 
 /* TAP TO BEGIN SCREEN */
+
 #startScreen {
   position: fixed;
   inset: 0;
@@ -103,6 +109,7 @@ body::before {
 }
 
 /* INTRO */
+
 #intro {
   position: fixed;
   inset: 0;
@@ -136,7 +143,10 @@ body.started #intro {
 }
 
 /* MAIN */
+
 .container {
+  position: relative;
+  z-index: 2;
   width: 100%;
   min-height: 100vh;
   padding: 60px 20px;
@@ -174,6 +184,7 @@ body.started h1 {
 }
 
 /* HANDWRITING NAME */
+
 .name {
   font-family: 'Italianno', cursive;
   font-size: clamp(90px, 15vw, 135px);
@@ -207,6 +218,7 @@ body.started .subtitle {
 }
 
 /* SURPRISE BUTTON */
+
 #surpriseBtn {
   background: linear-gradient(45deg, #bd8b42, #f7d99b);
   border: none;
@@ -236,6 +248,7 @@ body.started #surpriseBtn {
 }
 
 /* BIRTHDAY MESSAGE */
+
 #message {
   display: none;
   margin-top: 40px;
@@ -256,6 +269,7 @@ body.started #surpriseBtn {
 }
 
 /* ADMIRATION */
+
 #admiration {
   display: none;
   margin-top: 65px;
@@ -279,36 +293,56 @@ body.started #surpriseBtn {
 
 @keyframes softGlow {
   from { text-shadow: 0 0 5px #e879b0; }
-  to { text-shadow: 0 0 25px #e879b0, 0 0 45px #b85c82; }
+  to {
+    text-shadow:
+      0 0 25px #e879b0,
+      0 0 45px #b85c82;
+  }
 }
 
-/* FLOATING GOLDEN SPARKLES */
+/* FULL SCREEN FLOATING GOLDEN SPARKLES */
+
 .sparkle {
   position: fixed;
+  top: 0;
   color: #ffe4a3;
   pointer-events: none;
-  z-index: 0;
-  text-shadow: 0 0 12px #ffd56b;
+  z-index: 150;
+  text-shadow:
+    0 0 8px #ffd56b,
+    0 0 18px #ffcc55,
+    0 0 30px #e8c783;
   animation: float 8s linear infinite;
+  will-change: transform, opacity;
 }
 
 @keyframes float {
   0% {
-    transform: translateY(105vh) rotate(0deg);
+    transform: translateY(110vh) rotate(0deg) scale(.6);
     opacity: 0;
   }
 
-  20%, 80% {
+  10% {
+    opacity: 1;
+  }
+
+  50% {
+    transform: translateY(0vh) rotate(180deg) scale(1.2);
+    opacity: 1;
+  }
+
+  90% {
     opacity: 1;
   }
 
   100% {
-    transform: translateY(-10vh) rotate(180deg);
+    transform: translateY(-110vh) rotate(360deg) scale(.7);
     opacity: 0;
   }
 }
 
 /* GENERAL FADE */
+
 @keyframes fadeUp {
   from {
     opacity: 0;
@@ -322,6 +356,7 @@ body.started #surpriseBtn {
 }
 
 /* MOBILE */
+
 @media (max-width: 600px) {
   .container {
     padding: 35px 15px;

@@ -7,61 +7,62 @@ const surpriseBtn = document.getElementById("surpriseBtn");
 let fadeTimer = null;
 let surpriseOpened = false;
 
-// START EXPERIENCE AND MUSIC
-startBtn.addEventListener("click", async () => {
+/* BACKGROUND MUSIC */
 
-  // Start music directly from user's tap
-  bgMusic.volume = 0;
-
-  try {
-    await bgMusic.play();
-
-    let volume = 0;
-
-    clearInterval(fadeTimer);
-
-    fadeTimer = setInterval(() => {
-      volume = Math.min(volume + 0.05, 0.7);
-      bgMusic.volume = volume;
-
-      if (volume >= 0.7) {
-        clearInterval(fadeTimer);
-      }
-    }, 150);
-
-  } catch (error) {
-    console.log("Music playback error:", error);
-  }
-
-  // Start birthday animation
-  document.body.classList.add("started");
-  startScreen.classList.add("hide");
-
-  setTimeout(() => {
-    startScreen.remove();
-  }, 1000);
-
-});
-
-// MUSIC FALLBACK
 function startMusic() {
   if (!bgMusic || !bgMusic.paused) return;
 
-  bgMusic.play().catch(error => {
-    console.log("Music playback error:", error);
+  bgMusic.volume = 0;
+
+  bgMusic.play()
+    .then(() => {
+      clearInterval(fadeTimer);
+
+      let volume = 0;
+
+      fadeTimer = setInterval(() => {
+        volume = Math.min(volume + 0.05, 0.7);
+        bgMusic.volume = volume;
+
+        if (volume >= 0.7) {
+          clearInterval(fadeTimer);
+        }
+      }, 150);
+    })
+    .catch(error => {
+      console.log("Music playback error:", error);
+    });
+}
+
+/* TAP TO BEGIN */
+
+if (startBtn && startScreen) {
+  startBtn.addEventListener("click", () => {
+
+    startMusic();
+
+    document.body.classList.add("started");
+
+    startScreen.classList.add("hide");
+
+    setTimeout(() => {
+      startScreen.style.display = "none";
+    }, 1000);
+
   });
 }
 
-// BIRTHDAY SURPRISE
+/* BIRTHDAY SURPRISE */
+
 function openSurprise() {
   if (surpriseOpened) return;
 
   surpriseOpened = true;
 
-  startMusic();
-
   const message = document.getElementById("message");
   const admiration = document.getElementById("admiration");
+
+  if (!message || !admiration || !surpriseBtn) return;
 
   surpriseBtn.textContent = "YOUR SURPRISE IS HERE ✨";
   surpriseBtn.disabled = true;
@@ -84,20 +85,29 @@ function openSurprise() {
   }, 2500);
 }
 
-surpriseBtn.addEventListener("click", openSurprise);
+if (surpriseBtn) {
+  surpriseBtn.addEventListener("click", openSurprise);
+}
 
-// FLOATING GOLDEN SPARKLES
-for (let i = 0; i < 22; i++) {
+/* 45 FLOATING GOLDEN SPARKLES */
+
+for (let i = 0; i < 45; i++) {
+
   const sparkle = document.createElement("div");
 
   sparkle.className = "sparkle";
-  sparkle.textContent = "✦";
+  sparkle.textContent = Math.random() > 0.5 ? "✦" : "✧";
 
-  sparkle.style.left = Math.random() * 100 + "%";
-  sparkle.style.animationDelay = Math.random() * 8 + "s";
+  sparkle.style.left = Math.random() * 100 + "vw";
+
+  sparkle.style.fontSize =
+    (10 + Math.random() * 18) + "px";
+
+  sparkle.style.animationDelay =
+    (Math.random() * 8) + "s";
 
   sparkle.style.animationDuration =
-    (6 + Math.random() * 6) + "s";
+    (7 + Math.random() * 7) + "s";
 
   document.body.appendChild(sparkle);
 }
