@@ -10,14 +10,14 @@ if (bgMusic) {
   bgMusic.volume = 0;
 
   async function startMusic() {
-    if (!bgMusic.paused) return true;
+    if (!bgMusic.paused) return;
 
     try {
       await bgMusic.play();
 
       clearInterval(fadeTimer);
 
-      let volume = bgMusic.volume;
+      let volume = 0;
 
       fadeTimer = setInterval(() => {
         volume = Math.min(volume + 0.05, 0.7);
@@ -28,25 +28,18 @@ if (bgMusic) {
         }
       }, 150);
 
-      return true;
-
     } catch (error) {
-      console.log("Browser requires user interaction for music.");
-      return false;
+      console.log("Browser blocked autoplay.");
     }
   }
 
-  // AUTOMATIC MUSIC ON WEBSITE OPEN
-  window.addEventListener("load", () => {
-    startMusic();
-  });
+  // TRY AUTOPLAY WHEN WEBSITE OPENS
+  window.addEventListener("load", startMusic);
 
-  // FIRST INTERACTION MUSIC FALLBACK
-  document.addEventListener("pointerdown", () => {
-    if (bgMusic.paused) {
-      startMusic();
-    }
-  }, { once: true });
+  // FALLBACK: FIRST USER INTERACTION
+  document.addEventListener("pointerdown", startMusic, {
+    once: true
+  });
 }
 
 // BIRTHDAY SURPRISE
@@ -55,7 +48,6 @@ function openSurprise() {
 
   surpriseOpened = true;
 
-  // Start music if browser blocked autoplay
   if (bgMusic && bgMusic.paused) {
     startMusic();
   }
@@ -80,7 +72,6 @@ function openSurprise() {
       behavior: "smooth",
       block: "center"
     });
-
   }, 2500);
 }
 
