@@ -1,82 +1,114 @@
 
 const startScreen = document.getElementById("startScreen");
 const startBtn = document.getElementById("startBtn");
-const mainContent = document.getElementById("mainContent");
-const surpriseBtn = document.getElementById("surpriseBtn");
 const bgMusic = document.getElementById("bgMusic");
 
+const surpriseBtn = document.getElementById("surpriseBtn");
 const message = document.getElementById("message");
 const admiration = document.getElementById("admiration");
 const finalReveal = document.getElementById("finalReveal");
 
 let surpriseOpened = false;
 
-/* START WEBSITE AND PLAY MUSIC */
+
+/* START WEBSITE AND MUSIC */
 
 startBtn.addEventListener("click", async () => {
+
   startScreen.classList.add("hide");
 
-  mainContent.classList.add("show");
+  document.body.classList.add("started");
 
-  // Music starts after the user's tap
   bgMusic.volume = 0.7;
 
   try {
     await bgMusic.play();
   } catch (error) {
-    console.log("Music could not start:", error);
+    console.log("Music playback could not start:", error);
   }
 
-  setTimeout(() => {
-    startScreen.style.display = "none";
-  }, 1100);
 });
 
-/* OPEN BIRTHDAY SURPRISE */
 
-surpriseBtn.addEventListener("click", () => {
+/* SURPRISE REVEAL */
+
+function openSurprise() {
+
   if (surpriseOpened) return;
+
+  if (!message || !admiration || !finalReveal) {
+    console.error("A required reveal section is missing.");
+    return;
+  }
 
   surpriseOpened = true;
 
-  surpriseBtn.textContent = "MADE WITH LOVE ♡";
   surpriseBtn.disabled = true;
+  surpriseBtn.textContent = "YOUR SURPRISE IS HERE ✨";
 
-  message.classList.add("visible");
+  /* BIRTHDAY MESSAGE */
 
-  setTimeout(() => {
-    admiration.classList.add("visible");
-  }, 2500);
-
-  setTimeout(() => {
-    finalReveal.classList.add("visible");
-  }, 5000);
+  message.style.display = "block";
 
   setTimeout(() => {
-    message.scrollIntoView({
+
+    /* ADMIRATION */
+
+    admiration.style.display = "block";
+
+    admiration.scrollIntoView({
       behavior: "smooth",
       block: "center"
     });
-  }, 300);
-});
 
-/* FLOATING SPARKLES */
+  }, 2500);
 
-function createSparkle() {
-  const sparkle = document.createElement("span");
-
-  sparkle.classList.add("sparkle");
-  sparkle.textContent = "✦";
-
-  sparkle.style.left = Math.random() * 100 + "vw";
-  sparkle.style.fontSize = (10 + Math.random() * 15) + "px";
-  sparkle.style.animationDuration = (5 + Math.random() * 6) + "s";
-
-  document.body.appendChild(sparkle);
 
   setTimeout(() => {
-    sparkle.remove();
-  }, 11000);
+
+    /* GRAND FINAL REVEAL */
+
+    finalReveal.classList.add("show");
+
+    finalReveal.scrollIntoView({
+      behavior: "smooth",
+      block: "center"
+    });
+
+  }, 6500);
+
 }
 
-setInterval(createSparkle, 450);
+surpriseBtn.addEventListener("click", openSurprise);
+
+
+/* FLOATING GOLDEN SPARKLES */
+
+function createSparkles() {
+
+  for (let i = 0; i < 45; i++) {
+
+    const sparkle = document.createElement("div");
+
+    sparkle.className = "sparkle";
+
+    sparkle.textContent = Math.random() > 0.5 ? "✦" : "✧";
+
+    sparkle.style.left = Math.random() * 100 + "vw";
+
+    sparkle.style.fontSize =
+      (Math.random() * 12 + 8) + "px";
+
+    sparkle.style.animationDuration =
+      (Math.random() * 6 + 6) + "s";
+
+    sparkle.style.animationDelay =
+      (Math.random() * 8) + "s";
+
+    document.body.appendChild(sparkle);
+
+  }
+
+}
+
+createSparkles();
