@@ -21,16 +21,12 @@ body::before {
   content: "";
   position: fixed;
   inset: 0;
-  background: radial-gradient(
-    circle at center,
-    rgba(215,140,175,.09),
-    transparent 65%
-  );
+  background: radial-gradient(circle at center, rgba(215,140,175,.09), transparent 65%);
   pointer-events: none;
   z-index: 1;
 }
 
-/* TAP TO BEGIN SCREEN */
+/* START SCREEN */
 
 #startScreen {
   position: fixed;
@@ -62,8 +58,6 @@ body::before {
   text-shadow: 0 0 15px rgba(232,199,131,.4);
 }
 
-/* A LITTLE SURPRISE - TOP */
-
 .start-content h2 {
   font-family: 'Cormorant Garamond', serif;
   font-size: 22px;
@@ -72,8 +66,6 @@ body::before {
   margin: 10px 0;
   letter-spacing: 2px;
 }
-
-/* JUST FOR YOU - BELOW */
 
 .start-heading {
   color: #f4a9c5;
@@ -99,14 +91,12 @@ body::before {
   animation: buttonPulse 1.8s ease infinite;
 }
 
-/* VOLUME REMINDER */
-
 .volume-note {
   color: #eadde2;
   margin-top: 12px;
   font-size: 13px;
   letter-spacing: 1px;
-  opacity: 0.8;
+  opacity: .8;
 }
 
 .start-note {
@@ -122,12 +112,8 @@ body::before {
 }
 
 @keyframes buttonPulse {
-  0%, 100% {
-    box-shadow: 0 0 15px rgba(232,199,131,.25);
-  }
-  50% {
-    box-shadow: 0 0 25px rgba(232,199,131,.55);
-  }
+  0%, 100% { box-shadow: 0 0 15px rgba(232,199,131,.25); }
+  50% { box-shadow: 0 0 25px rgba(232,199,131,.55); }
 }
 
 /* INTRO */
@@ -161,10 +147,7 @@ body.started #intro {
 }
 
 @keyframes introExit {
-  to {
-    opacity: 0;
-    visibility: hidden;
-  }
+  to { opacity: 0; visibility: hidden; }
 }
 
 /* MAIN */
@@ -208,15 +191,23 @@ body.started h1 {
   animation: fadeUp 2s ease 3.8s both;
 }
 
-/* DIVIJA HANDWRITING NAME */
+/* SAME ELEGANT DIVIJA FONT IN ALL 3 PLACES */
+
+.name,
+#finalReveal h2,
+.compliment,
+.compliment span {
+  font-family: 'Great Vibes', cursive;
+  font-weight: 400;
+  font-style: normal;
+  color: #f4a9c5;
+  text-shadow: 0 0 8px rgba(232,121,176,.25);
+}
+
+/* MAIN DIVIJA */
 
 .name {
-  font-family: 'Italianno', cursive;
   font-size: clamp(90px, 15vw, 135px);
-  color: #f4a9c5;
-  text-shadow:
-    0 0 5px rgba(232,121,176,.35),
-    0 0 12px rgba(232,121,176,.2);
   margin: 0;
   overflow: hidden;
   white-space: nowrap;
@@ -305,19 +296,14 @@ body.started #surpriseBtn {
 }
 
 .compliment {
-  color: #f4a9c5;
-  font-family: 'Italianno', cursive;
   font-size: clamp(42px, 8vw, 70px);
   line-height: 1.35;
-  text-shadow: 0 0 8px rgba(232,121,176,.3);
 }
 
 .compliment span {
   display: block;
   margin-top: 12px;
   font-size: 1em;
-  color: #f4a9c5;
-  font-family: 'Italianno', cursive;
 }
 
 @keyframes admirationReveal {
@@ -334,12 +320,8 @@ body.started #surpriseBtn {
 /* SOFT GLOW */
 
 @keyframes softGlow {
-  from {
-    text-shadow: 0 0 5px rgba(232,121,176,.2);
-  }
-  to {
-    text-shadow: 0 0 15px rgba(232,121,176,.4);
-  }
+  from { text-shadow: 0 0 5px rgba(232,121,176,.2); }
+  to { text-shadow: 0 0 15px rgba(232,121,176,.4); }
 }
 
 /* FLOATING GOLDEN SPARKLES */
@@ -350,10 +332,7 @@ body.started #surpriseBtn {
   color: #ffe4a3;
   pointer-events: none;
   z-index: 150;
-  text-shadow:
-    0 0 8px #ffd56b,
-    0 0 18px #ffcc55,
-    0 0 30px #e8c783;
+  text-shadow: 0 0 8px #ffd56b, 0 0 18px #ffcc55, 0 0 30px #e8c783;
   animation: float 8s linear infinite;
   will-change: transform, opacity;
 }
@@ -363,23 +342,19 @@ body.started #surpriseBtn {
     transform: translateY(110vh) rotate(0deg) scale(.6);
     opacity: 0;
   }
-
   10% { opacity: 1; }
-
   50% {
     transform: translateY(0vh) rotate(180deg) scale(1.2);
     opacity: 1;
   }
-
   90% { opacity: 1; }
-
   100% {
     transform: translateY(-110vh) rotate(360deg) scale(.7);
     opacity: 0;
   }
 }
 
-/* GRAND FINAL REVEAL */
+/* FINAL REVEAL */
 
 #finalReveal {
   display: none;
@@ -411,12 +386,7 @@ body.started #surpriseBtn {
 }
 
 #finalReveal h2 {
-  font-family: 'Italianno', cursive;
   font-size: clamp(85px, 15vw, 130px);
-  color: #f4a9c5;
-  text-shadow:
-    0 0 8px rgba(232,121,176,.35),
-    0 0 18px rgba(184,92,130,.2);
   margin: 15px 0;
 }
 
