@@ -13,6 +13,7 @@ let surpriseOpened = false;
 /* START WEBSITE AND MUSIC */
 
 startBtn.addEventListener("click", async () => {
+
   startScreen.classList.add("hide");
 
   document.body.classList.add("started");
@@ -24,11 +25,13 @@ startBtn.addEventListener("click", async () => {
   } catch (error) {
     console.log("Music playback could not start:", error);
   }
+
 });
 
 /* SURPRISE REVEAL */
 
 function openSurprise() {
+
   if (surpriseOpened) return;
 
   if (!message || !admiration || !finalReveal) {
@@ -41,25 +44,36 @@ function openSurprise() {
   surpriseBtn.disabled = true;
   surpriseBtn.textContent = "YOUR SURPRISE IS HERE ✨";
 
+  /* BIRTHDAY MESSAGE */
+
   message.style.display = "block";
 
   setTimeout(() => {
+
+    /* ADMIRATION */
+
     admiration.style.display = "block";
 
     admiration.scrollIntoView({
       behavior: "smooth",
       block: "center"
     });
+
   }, 2500);
 
   setTimeout(() => {
+
+    /* GRAND FINAL REVEAL */
+
     finalReveal.classList.add("show");
 
     finalReveal.scrollIntoView({
       behavior: "smooth",
       block: "center"
     });
+
   }, 6500);
+
 }
 
 surpriseBtn.addEventListener("click", openSurprise);
@@ -67,19 +81,30 @@ surpriseBtn.addEventListener("click", openSurprise);
 /* FLOATING GOLDEN SPARKLES */
 
 function createSparkles() {
+
   for (let i = 0; i < 45; i++) {
+
     const sparkle = document.createElement("div");
 
     sparkle.className = "sparkle";
+
     sparkle.textContent = Math.random() > 0.5 ? "✦" : "✧";
 
     sparkle.style.left = Math.random() * 100 + "vw";
-    sparkle.style.fontSize = (Math.random() * 12 + 8) + "px";
-    sparkle.style.animationDuration = (Math.random() * 6 + 6) + "s";
-    sparkle.style.animationDelay = (Math.random() * 8) + "s";
+
+    sparkle.style.fontSize =
+      (Math.random() * 12 + 8) + "px";
+
+    sparkle.style.animationDuration =
+      (Math.random() * 6 + 6) + "s";
+
+    sparkle.style.animationDelay =
+      (Math.random() * 8) + "s";
 
     document.body.appendChild(sparkle);
+
   }
+
 }
 
 createSparkles();
