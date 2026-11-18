@@ -503,3 +503,11 @@ body.started #surpriseBtn {
     font-size: 20px;
   }
 }
+.start-note {
+  color: #bdaab5;
+  margin-top: 18px;
+  font-size: 12px;
+  letter-spacing: 1px;
+  opacity: 0.75;
+  font-family: 'Cormorant Garamond', serif;
+}
