@@ -62,7 +62,7 @@ body::before {
   text-shadow: 0 0 15px rgba(232,199,131,.4);
 }
 
-/* A LITTLE SURPRISE - TOP */
+/* A LITTLE SURPRISE */
 
 .start-content h2 {
   font-family: 'Cormorant Garamond', serif;
@@ -73,7 +73,7 @@ body::before {
   letter-spacing: 2px;
 }
 
-/* JUST FOR YOU - BELOW */
+/* JUST FOR YOU */
 
 .start-heading {
   color: #f4a9c5;
@@ -198,15 +198,19 @@ body.started h1 {
   animation: fadeUp 2s ease 3.8s both;
 }
 
-/* DIVIJA HANDWRITING NAME */
+/* DIVIJA - SECOND SCREEN */
+/* SAME THIN HANDWRITING STYLE */
 
 .name {
   font-family: 'Italianno', cursive;
   font-size: clamp(90px, 15vw, 135px);
+  font-weight: 400;
   color: #f4a9c5;
+
   text-shadow:
     0 0 5px rgba(232,121,176,.35),
     0 0 12px rgba(232,121,176,.2);
+
   margin: 0;
   overflow: hidden;
   white-space: nowrap;
@@ -298,6 +302,7 @@ body.started #surpriseBtn {
   color: #f4a9c5;
   font-family: 'Italianno', cursive;
   font-size: clamp(42px, 8vw, 70px);
+  font-weight: 400;
   line-height: 1.35;
   text-shadow: 0 0 8px rgba(232,121,176,.3);
 }
@@ -306,6 +311,7 @@ body.started #surpriseBtn {
   display: block;
   margin-top: 12px;
   font-size: 1em;
+  font-weight: 400;
   color: #f4a9c5;
   font-family: 'Italianno', cursive;
 }
@@ -400,13 +406,19 @@ body.started #surpriseBtn {
   font-size: 13px;
 }
 
+/* DIVIJA - THIRD SCREEN */
+/* SAME THIN STYLE AS OTHER SCREENS */
+
 #finalReveal h2 {
   font-family: 'Italianno', cursive;
   font-size: clamp(85px, 15vw, 130px);
+  font-weight: 400;
   color: #f4a9c5;
+
   text-shadow:
     0 0 8px rgba(232,121,176,.35),
     0 0 18px rgba(184,92,130,.2);
+
   margin: 15px 0;
 }
 
